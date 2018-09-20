@@ -1,5 +1,8 @@
 ## 设置debug和release版本不同的过期时间
 ### 使用buildConfigField设置BuildTimestamp
+
+>参考链接：https://developer.android.com/studio/build/gradle-tips#share-custom-fields-and-resource-values-with-your-app-code
+
 * 在build.gradle中添加
 
 ```groovy
