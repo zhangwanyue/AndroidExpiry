@@ -22,6 +22,12 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        def now = (long) (System.currentTimeMillis() / 1000)
+        //use git committer date(UNIX timestamp) to set buildTimestamp
+        buildConfigField "Long", "BuildTimestamp",
+                "${getStdout(['git', 'log', '-n', '1', '--format=%ct'], now)}000L"
+        //set app_name
+        resValue "string", "app_name", "Briar"
     }
     buildTypes {
         release {
@@ -31,8 +37,8 @@ android {
         debug{
             //add build config field, find in app/build/generated/source/buildConfig/debug/com/example/vera/gradlebuildconfig/BuildConfig.java
             applicationIdSuffix ".debug"
-            buildConfigField "Long", "BuildTimestamp",
-                    "${getStdout(['git', 'log', '-n', '1', '--format=%ct'], now)}000L"
+            //set debug app_name(use different name for debug and release,这样可以同时安装两个版本)
+            resValue "string", "app_name", "Briar Debug"
         }
     }
 }
