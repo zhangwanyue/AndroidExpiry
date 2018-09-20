@@ -1,6 +1,7 @@
 ## 设置debug和release版本不同的过期时间
 ### 使用buildConfigField设置BuildTimestamp
 * 在build.gradle中添加
+
 ```groovy
 android {
     ...
@@ -13,12 +14,16 @@ android {
     ...
 }
 ```
+
 * 在`app/build/generated/source/buildConfig/debug/com/example/vera/expirytest/BuildConfig.java`中可以看到生成的
+
 ```java
 // Fields from default config.
 public static final Long BuildTimestamp = 1537325758000L;
 ```
+
 * 在代码中使用BuildTimestamp设置过期时间
+
 ```java
 boolean IS_DEBUG_BUILD = BuildConfig.DEBUG;
 //Debug expire after 90 days. Final release builds expire after 292 million years.
@@ -27,7 +32,9 @@ long EXPIRY_DATE = IS_DEBUG_BUILD ? BuildConfig.BuildTimestamp + 90 * 24 * 60 * 
 BuildConfig.DEBUG是自动生成的，可以在`app/build/generated/source/buildConfig/debug/com/example/vera/expirytest/BuildConfig.java`中看到
 
 ### 设置debug版本和release版本的不同包名，不同app_name；使得手机上可以同时安装debug版本和release版本
+
 * 设置不同的包名
+
 ```groovy
 android {
     compileSdkVersion 26
@@ -51,6 +58,7 @@ android {
 所以debug版本的包名是`com.example.vera.expirytest.debug`,release版本的后缀是`com.example.vera.expirytest`
 
 * 设置不同的app_name
+
 ```groovy
 android {
     compileSdkVersion 26
@@ -71,7 +79,9 @@ android {
     }
 }
 ```
+
 在strings.xml中屏蔽app_name字段
+
 ```xml
 <resources>
     <!--<string name="app_name">ExpiryTest</string>-->
@@ -81,7 +91,9 @@ android {
 `android:label="@string/app_name"`
 所以debug版本的app_name是`Briar Debug`，在release版本中的app_name是`Briar`
 
+
 ### 测试
+
 ```java
 Log.i("EXPIRY", "days before expiry:" + daysBeforeExpiry);
 ```
